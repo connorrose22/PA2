@@ -27,74 +27,129 @@ namespace Fall2019_PA_2
 
             if(menuChoice =="3")
             {
-                Console.WriteLine("Goodbye");
+                Console.WriteLine("Goodbye"); //Menu closes when 3 is selected
             }
 
             while (menuChoice != "3")
             {
                 if (menuChoice == "1")
                 {
-                    Console.Write("Starting Currency Exchange: ");
-                    currencyExchange();
+                    currencyExchange(); //Currency Exchange Method when 1 is selected
                 }
                 else
                 {
-                    Console.Write("Starting Restaraunt Point of Sale: ");
-                    foodAmount();
+                    foodAmount(); //Restaraunt Point of Sale when 2 is selected
                 }
 
                 menuChoice = getMenuChoice();
 
                 if (menuChoice == "3")
                 {
-                    Console.WriteLine("Goodbye");
+                    Console.WriteLine("Goodbye"); //Menu closes when 3 is selected
                 }
             }
         }
 
         static string getMenuChoice()
         {
+            //Asking user to input choice
             Console.Write("Please enter 1 for Currency Exchange, 2 for Menu Point of Sale, or 3 to Exit: ");
             string choice = Console.ReadLine();
 
             while(!(choice =="1" || choice =="2" || choice == "3"))
             {
+                //Reminding to put valid choice
                 Console.WriteLine("Please enter a valid choice.");
                 choice = Console.ReadLine();
             }
             return choice;
         }
 
-        static void currencyExchange()
+        //Currency Exchange Method
+       static void currencyExchange()
         {
-            string supportedCurrency;
-            supportedCurrency = new string {"C", "E", "I", "J", "M", "B"};
+            //[] allows the ability to attach data to separate classes
+            string[] supportedCurrency;
+            supportedCurrency = new string[] {"US", "C", "E", "I", "J", "M", "B" };
 
-            double exchangeRates;
-            exchangeRates = new double {0.9813,0.757,52.53,80.92,13.1544,0.6178};
+            double[] exchangeRates;
+            exchangeRates = new double[] {1, 0.9813, 0.757, 52.53, 80.92, 13.1544, 0.6178 };
 
-            string fromCurrency,toCurrency;
+            string fromCurrency, toCurrency;
 
-            Console.WriteLine("Enter current currency: ");
+            Console.WriteLine("Enter Current Currency: ");
             fromCurrency = Console.ReadLine();
-            Console.WriteLine("Enter desired currency: ");
+            Console.WriteLine("Enter Desired Currency: ");
             toCurrency = Console.ReadLine();
 
-            int f=0,exchangeRate = 0;
+            int f = 0, exRate = 0;
 
-            for (int i=0; i < exchangeRates; i++);
+            for (int i = 0; i < exchangeRates.Length; i++)
             {
-                if (supportedCurrency == fromCurrency)
+                if (supportedCurrency[i] == fromCurrency)
                 {
-                    f = f+1;
+                    f = f + 1;
                 }
-                if (supportedCurrency == toCurrency)
+                if (supportedCurrency[i] == toCurrency)
                 {
-                    f = f+1;
-                    exchangeRate = i;
+                    f = f + 1;
+                    exRate = i;
                 }
             }
+            if (f == 2)
+            {
+                if (toCurrency == "US")
+                {
+                    double Amount;
 
+                    Console.WriteLine("Enter amount of Current Currency");
+                    Amount = Convert.ToDouble(Console.ReadLine());
+                    double exchangeAmount = Amount / exchangeRates[exRate];
+
+                    Console.WriteLine("The Exchange Amount is " + exchangeAmount);
+                }
+                else
+                {
+
+                double Amount;
+
+                Console.WriteLine("Enter amount of Current Currency");
+                Amount = Convert.ToDouble(Console.ReadLine());
+                double exchangeAmount = Amount * exchangeRates[exRate];
+
+
+                Console.WriteLine("The Exchange Amount is " + exchangeAmount);
+                }
+                
+            }
+            else
+            {
+                Console.WriteLine("Currency conversion is not possible.");
+            }
+        }
+
+        static void foodAmount()
+        {
+            Console.WriteLine("Enter Food Total: ");
+            double food = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Alcohol Total: ");
+            double alcohol = Convert.ToDouble(Console.ReadLine());
+
+            double total = (food + alcohol)*1.09 + food*.18;
+
+            Console.WriteLine("The Total Amount due is :" + total);
+
+            Console.WriteLine("Enter the Amount to Pay.");
+            double amount = Convert.ToDouble(Console.ReadLine());
+
+            if(amount < total)
+            {
+                Console.WriteLine("Please pay the full Amount.");
+            }
+            else
+            {
+                Console.WriteLine("Change due = " + (amount - total));
+            }
         }
     }
 }

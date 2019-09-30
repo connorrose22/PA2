@@ -148,7 +148,7 @@ namespace Fall2019_PA_2
             }
             else
             {
-                Console.WriteLine("Change due = " + (amount - total));
+                Console.WriteLine("Change due is: " + (amount - total));
             }
         }
     }
